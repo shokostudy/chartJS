@@ -1,0 +1,151 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <meta http-equiv="Content-Security-Policy" content="default-src * data: gap: https://ssl.gstatic.com; style-src * 'unsafe-inline'; script-src * 'unsafe-inline' 'unsafe-eval'">
+  <script src="components/loader.js"></script>
+  <script src="lib/onsenui/js/onsenui.min.js"></script>
+
+  <link rel="stylesheet" href="components/loader.css">
+  <link rel="stylesheet" href="lib/onsenui/css/onsenui.css">
+  <link rel="stylesheet" href="lib/onsenui/css/onsen-css-components.css">
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/chart.bundle.js"></script>
+  <script src="js/chart.util.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/custom.js"></script>
+
+  <script>
+    ons.ready(function() {
+      console.log("AccountBalance is ready!");
+    });
+
+    document.addEventListener('show', function(event) {
+      var page = event.target;
+      var titleElement = document.querySelector('#toolbar-title');
+
+      if (page.matches('#first-page')) {
+        titleElement.innerHTML = 'Account Balance';
+      } else if (page.matches('#second-page')) {
+        titleElement.innerHTML = 'Account Balance';
+      }
+    });
+  </script>
+  <script>
+        // グラフ用データ取得
+        var chartConfig = getChartData();
+        var ratioConfig = getRatioData();
+
+        window.onload = function() {
+            // 口座残高推移グラフ表示
+            var ctxChart = document.getElementById("chart_all").getContext("2d");
+            window.myLine = new Chart(ctxChart, chartConfig);
+            // 口座残高割合グラフ表示
+            var ctxRatio = document.getElementById("ratio_all").getContext("2d");
+            window.myPie = new Chart(ctxRatio, ratioConfig);
+            // polar area chart
+            //var ctxRatio = document.getElementById("ratio_all");
+            //window.myPolarArea = Chart.PolarArea(ctxRatio, ratioConfig);
+        };
+    </script>
+</head>
+<body>
+  <ons-page>
+    <ons-toolbar>
+      <div class="center" id="toolbar-title" style="background-color:#222; color:#fff;"></div>
+    </ons-toolbar>
+    <ons-tabbar position="auto">
+      <ons-tab label="Chart" page="tab1.html" active>
+      </ons-tab>
+      <ons-tab label="Input" page="tab2.html">
+      </ons-tab>
+    </ons-tabbar>
+  </ons-page>
+
+  <ons-template id="tab1.html">
+    <ons-page id="first-page">
+      <h2 id="tab1_h201">
+        口座残高推移
+      </h2>
+      <section id="graph_section1">
+        <div>
+            <canvas id="chart_all" height="500" width="500"></canvas>
+        </div>
+        <div class="buttonWrapCenter_div">
+            per:
+            <ons-button id="month_button" onclick="chartMonth()" disabled>month</ons-button>
+            <ons-button id="halfyear_button" onclick="chartHalfYear()">half year</ons-button>
+            <ons-button id="year_button" onclick="chartYear()">year</ons-button>
+        </div>
+      </section>
+      <section id="graph_section2">
+        <h2 id="tab1_h202">口座残高割合</h2>
+        <div>
+            <canvas id="ratio_all" height="500" width="500"></canvas>
+        </div>
+      </section>
+    </ons-page>
+  </ons-template>
+
+  <ons-template id="tab2.html">
+    <ons-page id="second-page">
+      <h1 id="tab1_h2">
+        口座残高入力
+      </h1>
+      <section id="input_section">
+        <h3 id="tab2_h301">銀行名：</h3>
+        <ons-select id="choose-sel1" onchange="editSelects1(event)">
+          <option value="1">A-Bank</option>
+          <option value="2">B-Bank</option>
+          <option value="3">C-Bank</option>
+        </ons-select>
+        <div class="buttonWrapRight_div">
+              銀行の追加<ons-icon icon="ion-ios-plus" size="30px" style="color: green;" id="plus_icon" onclick="ons.notification.prompt({message: '銀行名を入力してください', title:'銀行名追加'})"></ons-icon>
+        </div>
+        <h3 id="tab2_h302">年：</h3>
+        <ons-select id="choose-sel2" onchange="editSelects2(event)">
+          <option value="1">2017</option>
+          <option value="2">2016</option>
+          <option value="3">2015</option>
+        </ons-select>
+        <h3 id="tab2_h303">月：</h3>
+        <ons-select id="choose-sel2" onchange="editSelects2(event)">
+          <option value="1">1月</option>
+          <option value="2">2月</option>
+          <option value="3">3月</option>
+          <option value="3">4月</option>
+          <option value="3">5月</option>
+          <option value="3">6月</option>
+          <option value="3">7月</option>
+          <option value="3">8月</option>
+          <option value="3">9月</option>
+          <option value="3">10月</option>
+          <option value="3">11月</option>
+          <option value="3">12月</option>
+        </ons-select>
+        <h3 id="tab2_h304">口座残高：</h3>
+        <p>
+          <ons-input id="balance_input" modifier="underbar" placeholder="1000,000,000" float></ons-input>
+        </p>
+        <div class="buttonWrapRight_div">
+          <ons-button style="background-color: green;">
+            <ons-icon icon="ion-ios-checkmark-empty" size="30px" onclick="ons.notification.toast({message: '口座残高を登録しました。', timeout: 2000})"></ons-icon>
+            口座残高を登録する
+          </ons-button>
+        </div>
+      </section>
+    </ons-page>
+  </ons-template>
+  <!--銀行名編集ページ-->
+  <ons-template id="edit.html">
+    <ons-page id="edit">
+      <ons-toolbar>
+        <div class="left"><ons-back-button></ons-back-button></div>
+        <div class="center">銀行名の編集</div>
+      </ons-toolbar>
+      <p>aaaaaaaa</p>
+    </ons-page>
+  </ons-template>
+</body>
+</html>

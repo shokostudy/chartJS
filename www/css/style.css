@@ -1,0 +1,71 @@
+body{
+    /*font-family: 'Robot, sans-serif';*/
+    font-family: -apple-system, 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif;
+    font-size: 62.5%;
+}
+
+/**
+*tab1
+*/
+h2#tab1_h201, h2#tab1_h202{
+    text-indent: 1.0rem;
+    font-size: 1.2rem;
+    padding-top: 10px;
+}
+
+section#graph_section1{
+    padding:5px;
+}
+
+section#graph_section2{
+    padding:10px;
+}
+
+div.buttonWrapCenter_div{
+    text-align: center;
+    font-size: 0.8rem;
+}
+
+#month_button, #halfyear_button, #year_button{
+    margin:0 0 0 10px;
+    background-color: #fff;
+    color:#777;
+    border:1px solid #ddd;
+    box-shadow: 0 0 1px #eee;
+    font-size: 0.8rem;
+}
+
+/**
+*tab2
+*/
+h1#tab1_h2{
+    text-indent: 1.0rem;
+    font-size: 1.2rem;
+    padding-top: 10px;
+}
+
+section#input_section{
+    padding:10px;
+}
+
+h3#tab2_h301, h3#tab2_h302, h3#tab2_h303, h3#tab2_h304{
+    font-size: 1.0rem;
+}
+
+#choose-sel1, #choose-sel2{
+    width:100%;
+    margin:0 0 10px;
+}
+
+div.buttonWrapRight_div{
+    text-align: right;
+    font-size: 0.8rem;
+}
+
+#plus_icon{
+    margin:0 0 0 10px;
+}
+
+#balance_input{
+    width: 100%;
+}
